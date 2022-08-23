@@ -50,18 +50,4 @@ functions:
   - ${file(./serverless/functions/note.functions.yaml):functions}
 
 resources:
-  Resources:
-    NotesTable:
-      Type: AWS::DynamoDB::Table
-      # DeletionPolicy: Retain
-      Properties:
-        TableName: ${self:custom.tableName}
-        AttributeDefinitions:
-          - AttributeName: noteId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: noteId
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+  - ${file(./serverless/resources/dynamodb/todo.table.yaml)}
