@@ -6,6 +6,7 @@
     "sls": "sls",
     "start": "sls offline start",
     "build": "tsc",
+    "dynamodb:install": "sls dynamodb install",
     "deploy": "sls deploy",
     "remove": "sls remove"
   },

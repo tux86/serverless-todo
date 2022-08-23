@@ -3,6 +3,7 @@ frameworkVersion: '3'
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-dynamodb-local
   - serverless-offline
 
 provider:
@@ -15,6 +16,35 @@ provider:
   timeout: 29 # Lambda timeout = API Gateway default timeout
   versionFunctions: false
   logRetentionInDays: 14
+  iam:
+    role:
+      statements:
+        # Allow access to DynamoDB tables
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+          Resource:
+            - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.tableName}
+  environment:
+    TABLE_NAME: ${self:custom.tableName}
+
+custom:
+  tableName: todo-table-${sls:stage}
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
 
 functions:
   addNote:
@@ -26,3 +56,19 @@ functions:
           method: post
           path: /notes
 
+resources:
+  Resources:
+    NotesTable:
+      Type: AWS::DynamoDB::Table
+      # DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: noteId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: noteId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
