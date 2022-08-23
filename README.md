@@ -39,12 +39,13 @@ $ yarn start  # start serverless offline mode
 
 To deploy the stack on AWS, you need to execute the following command:
 
-_use option  **---region <aws-region>** to change region (default: **us-east-1**)_
-
-_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
 ```shell
 $ yarn deploy
 ```
+
+_use option  **---region <aws-region>** to change region (default: **us-east-1**)_
+
+_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
 
 ## Testing the API
 
