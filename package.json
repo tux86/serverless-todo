@@ -2,6 +2,12 @@
   "name": "serverless-todo",
   "version": "1.0.0",
   "license": "MIT",
+  "scripts": {
+    "sls": "sls",
+    "start": "sls offline start",
+    "deploy": "sls deploy",
+    "remove": "sls remove"
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.102",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
