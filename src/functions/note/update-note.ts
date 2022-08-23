@@ -3,7 +3,6 @@ import {noteRepository} from '../../repositories';
 import {
   buildInternalServerErrorResponse,
   buildJSONResponse,
-  buildNoContentResponse,
   buildNotFoundResponse
 } from "../../utils/lambda.util";
 
@@ -18,8 +17,8 @@ export const handler: Handler = async (
       return buildJSONResponse({message: 'required path parameter noteId'}, 400)
     }
     const body = event.body ? parse(event.body) : null;
-    await noteRepository.updateNote(noteId, body);
-    return buildNoContentResponse()
+    const note = await noteRepository.updateNote(noteId, body);
+    return buildJSONResponse(note)
   } catch (error) {
     if (error.name === 'ConditionalCheckFailedException') {
       return buildNotFoundResponse('Attempt to Update a non-existing object')

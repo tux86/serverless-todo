@@ -25,7 +25,7 @@ export class NoteRepository {
   }
 
   // create a note
-  async addNote(addNoteDto: AddNoteDto): Promise<Note> {
+  async addNote(addNoteDto: AddNoteDto): Promise<Note|never> {
     const note: Note = {
       noteId: uuid.v4(),
       ...addNoteDto,
@@ -43,7 +43,7 @@ export class NoteRepository {
   }
 
   // list all notes
-  async listNotes(): Promise<Note[]> {
+  async listNotes(): Promise<Note[]|never> {
     const params: ScanCommandInput = {
       TableName: tableName,
     };
@@ -58,7 +58,7 @@ export class NoteRepository {
   }
 
   // get a note by hash key
-  async getNote(noteId: string): Promise<Note | undefined> {
+  async getNote(noteId: string): Promise<Note | undefined | never> {
     const params: GetItemCommandInput = {
       TableName: tableName,
       Key: marshall({
@@ -70,7 +70,7 @@ export class NoteRepository {
   }
 
   // update a note
-  async updateNote(noteId: string, updateNoteDto: UpdateNoteDto): Promise<void> {
+  async updateNote(noteId: string, updateNoteDto: UpdateNoteDto): Promise<Note|never> {
     const input: UpdateItemCommandInput = {
       TableName: tableName,
       Key: marshall({
@@ -86,16 +86,23 @@ export class NoteRepository {
       ConditionExpression: 'noteId = :noteId',
       ReturnValues: 'ALL_NEW',
     };
-    await this.ddbClient.send(new UpdateItemCommand(input));
+    const result = await this.ddbClient.send(new UpdateItemCommand(input));
+
+    if (!('Attributes' in result) || !result.Attributes) {
+      throw new Error(`failed to update note#${noteId}`)
+    }
+
+    return unmarshall(result.Attributes) as Note
   }
 
   // delete a note
-  async deleteNote(noteId: string): Promise<boolean> {
+  async deleteNote(noteId: string): Promise<boolean|never> {
     const params: DeleteItemCommandInput = {
       TableName: tableName,
       Key: marshall({
         noteId,
       }),
+      ConditionExpression: 'attribute_exists(noteId)',
     };
     await this.ddbClient.send(new DeleteItemCommand(params));
     return true;

@@ -20,7 +20,11 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
     }
     return buildNoContentResponse()
   } catch (error) {
-    console.error('*** Error ***', error);
-    return buildInternalServerErrorResponse()
+    if (error.name === 'ConditionalCheckFailedException') {
+      return buildNotFoundResponse('Attempt to delete a non-existing object')
+    } else {
+      console.error('*** Error ***', error);
+      return buildInternalServerErrorResponse()
+    }
   }
 };
