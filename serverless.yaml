@@ -1,0 +1,28 @@
+service: serverless-todo
+frameworkVersion: '3'
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  architecture: arm64
+  stage: dev
+  region: ${opt:region, "us-east-1"}
+  memorySize: 128
+  timeout: 29 # Lambda timeout = API Gateway default timeout
+  versionFunctions: false
+  logRetentionInDays: 14
+
+functions:
+  addNote:
+    handler: src/functions/note/add-note.handler
+    name: ${self:service}-addNote-${sls:stage}
+    description: add a note
+    events:
+      - httpApi:
+          method: post
+          path: /notes
+
