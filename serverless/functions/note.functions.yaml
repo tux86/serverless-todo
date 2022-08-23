@@ -23,3 +23,11 @@ functions:
       - httpApi:
           method: get
           path: /notes/{noteId}
+  deleteNote:
+    handler: src/functions/note/delete-note.handler
+    name: ${self:service}-deleteNote-${sls:stage}
+    description: delete a note
+    events:
+      - httpApi:
+          method: delete
+          path: /notes/{noteId}

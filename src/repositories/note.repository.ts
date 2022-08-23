@@ -1,4 +1,6 @@
 import {
+  DeleteItemCommand,
+  DeleteItemCommandInput,
   DynamoDBClient,
   GetItemCommand,
   GetItemCommandInput,
@@ -76,6 +78,18 @@ export class NoteRepository {
       ReturnValues: 'ALL_NEW',
     };
     await this.ddbClient.send(new UpdateItemCommand(input));
+  }
+
+  // delete a note
+  async deleteNote(noteId: string): Promise<boolean> {
+    const params: DeleteItemCommandInput = {
+      TableName: tableName,
+      Key: marshall({
+        noteId,
+      }),
+    };
+    await this.ddbClient.send(new DeleteItemCommand(params));
+    return true;
   }
 
 }
