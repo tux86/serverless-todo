@@ -11,8 +11,9 @@
     "build": "tsc",
     "dynamodb:install": "sls dynamodb install",
     "start": "sls offline start",
-    "deploy": "sls deploy",
-    "remove": "sls remove"
+    "deploy": "yarn sls:deploy",
+    "sls:deploy": "sls deploy",
+    "sls:remove": "sls remove"
   },
   "keywords": [
     "CRUD",
