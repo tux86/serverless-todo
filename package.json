@@ -1,16 +1,29 @@
 {
   "name": "serverless-todo",
   "version": "1.0.0",
+  "description": "A REST API example for simple todo application with Node.js and Serverless Framework",
   "license": "MIT",
+  "author": "Walid Karray",
   "scripts": {
     "sls": "sls",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "lint": "eslint '{src,test}/**/*.ts'",
+    "lint:fix": "eslint --fix '{src,test}/**/*.ts'",
     "start": "sls offline start",
     "build": "tsc",
-    "dynamodb:install": "sls dynamodb install",
+    "postinstall": "sls dynamodb install",
     "deploy": "sls deploy",
     "remove": "sls remove"
   },
+  "keywords": [
+    "CRUD",
+    "API",
+    "REST",
+    "Serverless",
+    "Typescript",
+    "DynamoDB",
+    "AWS",
+    "TODO"
+  ],
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.154.0",
     "@aws-sdk/util-dynamodb": "^3.154.0",
@@ -19,12 +32,9 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.102",
-    "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.33.1",
+    "@typescript-eslint/eslint-plugin": "5.33.1",
+    "@typescript-eslint/parser": "5.33.1",
     "eslint": "^8.22.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-github": "^4.3.7",
-    "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
     "serverless": "^3.22.0",
     "serverless-dynamodb-local": "^0.2.40",

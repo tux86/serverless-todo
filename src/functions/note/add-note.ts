@@ -1,10 +1,11 @@
-import { APIGatewayEvent, Handler } from 'aws-lambda';
-const { stringify, parse } = JSON;
-import { noteRepository } from '../../repositories';
+import {APIGatewayEvent, APIGatewayProxyResult, Handler} from 'aws-lambda';
+import {noteRepository} from '../../repositories';
+
+const {stringify, parse} = JSON;
 
 export const handler: Handler = async (
   event: APIGatewayEvent,
-): Promise<any> => {
+) : Promise<APIGatewayProxyResult> => {
   try {
     const body = event.body ? parse(event.body) : null;
     const note = await noteRepository.addNote(body);
