@@ -7,19 +7,22 @@ import {
   PutItemCommand,
   PutItemCommandInput,
   ScanCommand,
-  ScanCommandInput, UpdateItemCommand, UpdateItemCommandInput,
+  ScanCommandInput,
+  UpdateItemCommand,
+  UpdateItemCommandInput,
 } from '@aws-sdk/client-dynamodb';
-import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
+import {marshall, unmarshall} from '@aws-sdk/util-dynamodb';
 import * as uuid from 'uuid';
-import { config } from '../config';
-import { AddNoteDto } from '../dtos/add-note.dto';
-import { Note } from '../models/note.model';
+import {config} from '../config';
+import {AddNoteDto} from '../dtos/add-note.dto';
+import {Note} from '../models/note.model';
 import {UpdateNoteDto} from "../dtos/update-note.dto";
 
-const { tableName } = config;
+const {tableName} = config;
 
 export class NoteRepository {
-  constructor(private readonly ddbClient: DynamoDBClient) {}
+  constructor(private readonly ddbClient: DynamoDBClient) {
+  }
 
   // create a note
   async addNote(addNoteDto: AddNoteDto): Promise<Note> {
@@ -62,7 +65,7 @@ export class NoteRepository {
         noteId,
       }),
     };
-    const { Item } = await this.ddbClient.send(new GetItemCommand(params));
+    const {Item} = await this.ddbClient.send(new GetItemCommand(params));
     return Item ? (unmarshall(Item) as Note) : undefined;
   }
 

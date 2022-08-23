@@ -1,7 +1,8 @@
 import {APIGatewayProxyEventV2, APIGatewayProxyResultV2, Handler} from 'aws-lambda';
 import {noteRepository} from '../../repositories';
+import {buildInternalServerErrorResponse, buildJSONResponse} from "../../utils/lambda.util";
 
-const {stringify, parse} = JSON;
+const {parse} = JSON;
 
 export const handler: Handler = async (
   event: APIGatewayProxyEventV2,
@@ -9,15 +10,9 @@ export const handler: Handler = async (
   try {
     const body = event.body ? parse(event.body) : null;
     const note = await noteRepository.addNote(body);
-    return {
-      body: stringify(note),
-      statusCode: 201,
-    };
+    return buildJSONResponse(note)
   } catch (error) {
-    console.error('Error', error);
-    return {
-      body: stringify({message: 'Internal server error'}),
-      statusCode: 500,
-    };
+    console.error('*** Error ***', error);
+    return buildInternalServerErrorResponse()
   }
 };

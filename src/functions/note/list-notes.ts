@@ -1,19 +1,13 @@
 import {APIGatewayProxyResultV2, Handler} from 'aws-lambda';
 import {noteRepository} from '../../repositories';
+import {buildInternalServerErrorResponse, buildJSONResponse} from "../../utils/lambda.util";
 
-const {stringify} = JSON;
 export const handler: Handler = async (): Promise<APIGatewayProxyResultV2> => {
   try {
     const notes = await noteRepository.listNotes();
-    return {
-      body: stringify(notes),
-      statusCode: 200,
-    };
+    return buildJSONResponse(notes)
   } catch (error) {
-    console.error('Error', error);
-    return {
-      body: stringify({message: 'Internal server error'}),
-      statusCode: 500,
-    };
+    console.error('*** Error ***', error);
+    return buildInternalServerErrorResponse()
   }
 };
