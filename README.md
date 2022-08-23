@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a TypeScript powered serverless REST API example for a simple todo application.
+This is a TypeScript powered serverless REST API example for a simple TODO application.
 
 - **Platform:** AWS
 - **Language:** TypeScript 4
@@ -21,8 +21,8 @@ This is a TypeScript powered serverless REST API example for a simple todo appli
 -  [node 16.x](https://nodejs.org/fr/download/)
 -   [yarn](https://yarnpkg.com/)
 
-## Getting Started
-- Clone the project repository by running the command below.
+## ⛏️ Getting Started 
+- clone the project repository by running the command below.
 ```shell
 $ git clone git@github.com:tux86/serverless-todo.git
 ```
@@ -34,22 +34,22 @@ $ cd serverless-todo && yarn install
 ```shell
 $ yarn dynamodb:install
 ```
-- Start the offline mode and follow the instructions in the console.
+- start the offline mode and follow the instructions in the console.
 ```shell
 $ yarn start  # start serverless offline mode
 ```
 
-## Deploy
+## 🚀 Deploy
 
 To deploy the stack on AWS, you need to execute the following command:
 
 ```shell
 $ yarn deploy
 ```
-
+💡
 _use option  **---region <aws-region>** to change region (default: **us-east-1**)_
 
-_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
+💡_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
 
 ## Testing the API
 
