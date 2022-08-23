@@ -46,8 +46,65 @@ $ yarn deploy
 
 ## Testing the API
 
+* POST /notes `create a note`
+  * sample request body `application/json`:
+    ```json
+    {
+        "title": "serverless todo api",
+        "content": "serverless rocks !"
+    }
+    ```
+  * successful response `http status 201`: 
+    ```json
+    {
+        "noteId": "395a24db-f416-48f8-87ec-c76a87461c70",
+        "title": "serverless todo api",
+        "content": "serverless rocks!"
+    }
+    ```
+  
+* GET /notes `list all notes`
+    * successful response `http status 200`:
+    ```json
+    [
+      {
+        "noteId": "395a24db-f416-48f8-87ec-c76a87461c70",
+        "title": "serverless todo api",
+        "content": "serverless rocks!"
+      }
+    ]
+    ```
 
-## Undeploy
+* GET /notes/{noteId}  `get a note`
+    * successful response `http status 201`:
+      ```json
+      {
+          "noteId": "395a24db-f416-48f8-87ec-c76a87461c70",
+          "title": "serverless todo api",
+          "content": "serverless rocks!"
+      }
+      ```
+* PUT /notes/{noteId}  `update a note`
+    * sample request body `application/json`:
+      ```json
+      {
+          "title": "test update title",
+          "content": "test update content"
+      }
+      ```
+    * successful response `http status 200`:
+      ```json
+      {
+          "noteId": "395a24db-f416-48f8-87ec-c76a87461c70",
+          "title": "test update title",
+          "content": "test update content"
+      }
+      ```
+* DELETE /notes/{noteId} `delete a note`
+    * successful response `http status 204` `empty response body`
+
+    
+## Remove the stack from AWS
 
 ```shell
 $ yarn remove --stage dev --region us-east-1

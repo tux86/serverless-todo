@@ -23,6 +23,14 @@ functions:
       - httpApi:
           method: get
           path: /notes/{noteId}
+  updateNote:
+    handler: src/functions/note/update-note.handler
+    name: ${self:service}-updateNote-${sls:stage}
+    description: update a note
+    events:
+      - httpApi:
+          method: put
+          path: /notes/{noteId}
   deleteNote:
     handler: src/functions/note/delete-note.handler
     name: ${self:service}-deleteNote-${sls:stage}
