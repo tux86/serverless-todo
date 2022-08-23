@@ -1,4 +1,4 @@
-import {APIGatewayProxyResultV2,APIGatewayProxyEventV2, Handler} from 'aws-lambda';
+import {APIGatewayProxyEventV2, APIGatewayProxyResultV2, Handler} from 'aws-lambda';
 import {noteRepository} from '../../repositories';
 
 const {stringify, parse} = JSON;
@@ -16,7 +16,7 @@ export const handler: Handler = async (
   } catch (error) {
     console.error('Error', error);
     return {
-      body: 'Internal server error',
+      body: stringify({message: 'Internal server error'}),
       statusCode: 500,
     };
   }

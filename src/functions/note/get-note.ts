@@ -1,4 +1,4 @@
-import {APIGatewayProxyResultV2,APIGatewayProxyEventV2, Handler} from 'aws-lambda';
+import {APIGatewayProxyEventV2, APIGatewayProxyResultV2, Handler} from 'aws-lambda';
 import {noteRepository} from '../../repositories';
 
 
@@ -8,7 +8,7 @@ export const handler: Handler = async (event: APIGatewayProxyEventV2): Promise<A
     const noteId = event.pathParameters?.noteId;
     if (!noteId) {
       return {
-        body: 'required path parameter noteId',
+        body: stringify({message: 'required path parameter noteId'}),
         statusCode: 400,
       };
     }
@@ -29,7 +29,7 @@ export const handler: Handler = async (event: APIGatewayProxyEventV2): Promise<A
   } catch (error) {
     console.error('Error', error);
     return {
-      body: 'Internal server error',
+      body: stringify({message: 'Internal server error'}),
       statusCode: 500,
     };
   }

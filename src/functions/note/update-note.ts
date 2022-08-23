@@ -1,7 +1,7 @@
-import {APIGatewayProxyResultV2,APIGatewayProxyEventV2, Handler} from 'aws-lambda';
+import {APIGatewayProxyEventV2, APIGatewayProxyResultV2, Handler} from 'aws-lambda';
 import {noteRepository} from '../../repositories';
 
-const {parse} = JSON;
+const {stringify, parse} = JSON;
 
 export const handler: Handler = async (
   event: APIGatewayProxyEventV2,
@@ -10,7 +10,7 @@ export const handler: Handler = async (
     const noteId = event.pathParameters?.noteId;
     if (!noteId) {
       return {
-        body: 'required path parameter noteId',
+        body: stringify({message: 'required path parameter noteId'}),
         statusCode: 400,
       };
     }
@@ -22,13 +22,13 @@ export const handler: Handler = async (
   } catch (error) {
     if (error.name === 'ConditionalCheckFailedException') {
       return {
-        body: 'Attempt to Update a non-existing object',
+        body: stringify({message:  'Attempt to Update a non-existing object'}),
         statusCode: 404,
       };
     } else {
       console.error('Error', error);
       return {
-        body: 'Internal server error',
+        body: stringify({message: 'Internal server error'}),
         statusCode: 500,
       };
     }

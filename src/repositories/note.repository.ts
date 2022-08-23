@@ -26,10 +26,14 @@ export class NoteRepository {
     const note: Note = {
       noteId: uuid.v4(),
       ...addNoteDto,
+      createdAt: new Date()
     };
     const input: PutItemCommandInput = {
       TableName: tableName,
-      Item: marshall(note),
+      Item: marshall({
+        ...note,
+        createdAt: note.createdAt.toISOString()
+      }),
     };
     await this.ddbClient.send(new PutItemCommand(input));
     return note;
@@ -40,6 +44,7 @@ export class NoteRepository {
     const params: ScanCommandInput = {
       TableName: tableName,
     };
+    // TODO: Query on attribute like "userId" should be used instead of a Scan.
     const result = await this.ddbClient.send(new ScanCommand(params));
     const items = result.Items || [];
     const notes: Note[] = [];
@@ -62,17 +67,18 @@ export class NoteRepository {
   }
 
   // update a note
-  async updateNote(noteId: string, updateNote: UpdateNoteDto): Promise<void> {
+  async updateNote(noteId: string, updateNoteDto: UpdateNoteDto): Promise<void> {
     const input: UpdateItemCommandInput = {
       TableName: tableName,
       Key: marshall({
         noteId,
       }),
-      UpdateExpression: 'SET title = :title, content = :content',
+      UpdateExpression: 'SET title = :title, content = :content, updatedAt = :updatedAt',
       ExpressionAttributeValues: marshall({
         ':noteId': noteId,
-        ':title': updateNote.title || null,
-        ':content': updateNote.content || null,
+        ':title': updateNoteDto.title || null,
+        ':content': updateNoteDto.content || null,
+        ':updatedAt': (new Date()).toISOString()
       }),
       ConditionExpression: 'noteId = :noteId',
       ReturnValues: 'ALL_NEW',

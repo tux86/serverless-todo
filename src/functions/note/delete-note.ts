@@ -1,13 +1,14 @@
-import { APIGatewayEvent, Handler } from 'aws-lambda';
-import { noteRepository } from '../../repositories';
-const { stringify } = JSON;
+import {APIGatewayEvent, Handler} from 'aws-lambda';
+import {noteRepository} from '../../repositories';
+
+const {stringify} = JSON;
 export const handler: Handler = async (event: APIGatewayEvent) => {
   try {
     const noteId = event.pathParameters?.noteId;
 
     if (!noteId) {
       return {
-        body: 'required path parameter noteId',
+        body: stringify({message: 'required path parameter noteId'}),
         statusCode: 400,
       };
     }
@@ -26,7 +27,7 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
   } catch (error) {
     console.error('Error', error);
     return {
-      body: 'Internal server error',
+      body: stringify({message: 'Internal server error'}),
       statusCode: 500,
     };
   }
