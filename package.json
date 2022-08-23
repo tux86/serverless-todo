@@ -8,9 +8,9 @@
     "sls": "sls",
     "lint": "eslint '{src,test}/**/*.ts'",
     "lint:fix": "eslint --fix '{src,test}/**/*.ts'",
-    "start": "sls offline start",
     "build": "tsc",
-    "postinstall": "sls dynamodb install",
+    "dynamodb:install": "sls dynamodb install",
+    "start": "sls offline start",
     "deploy": "sls deploy",
     "remove": "sls remove"
   },
