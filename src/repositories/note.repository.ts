@@ -5,13 +5,14 @@ import {
   PutItemCommand,
   PutItemCommandInput,
   ScanCommand,
-  ScanCommandInput,
+  ScanCommandInput, UpdateItemCommand, UpdateItemCommandInput,
 } from '@aws-sdk/client-dynamodb';
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import * as uuid from 'uuid';
 import { config } from '../config';
 import { AddNoteDto } from '../dtos/add-note.dto';
 import { Note } from '../models/note.model';
+import {UpdateNoteDto} from "../dtos/update-note.dto";
 
 const { tableName } = config;
 
@@ -57,4 +58,24 @@ export class NoteRepository {
     const { Item } = await this.ddbClient.send(new GetItemCommand(params));
     return Item ? (unmarshall(Item) as Note) : undefined;
   }
+
+  // update a note
+  async updateNote(noteId: string, updateNote: UpdateNoteDto): Promise<void> {
+    const input: UpdateItemCommandInput = {
+      TableName: tableName,
+      Key: marshall({
+        noteId,
+      }),
+      UpdateExpression: 'SET title = :title, content = :content',
+      ExpressionAttributeValues: marshall({
+        ':noteId': noteId,
+        ':title': updateNote.title || null,
+        ':content': updateNote.content || null,
+      }),
+      ConditionExpression: 'noteId = :noteId',
+      ReturnValues: 'ALL_NEW',
+    };
+    await this.ddbClient.send(new UpdateItemCommand(input));
+  }
+
 }
