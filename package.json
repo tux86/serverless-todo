@@ -8,6 +8,12 @@
     "deploy": "sls deploy",
     "remove": "sls remove"
   },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.154.0",
+    "@aws-sdk/util-dynamodb": "^3.154.0",
+    "@types/uuid": "^8.3.4",
+    "uuid": "^8.3.2"
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.102",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
