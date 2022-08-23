@@ -55,6 +55,14 @@ functions:
       - httpApi:
           method: post
           path: /notes
+  listNotes:
+    handler: src/functions/note/list-notes.handler
+    name: ${self:service}-listNotes-${sls:stage}
+    description: list all notes
+    events:
+      - httpApi:
+          method: get
+          path: /notes
 
 resources:
   Resources:
