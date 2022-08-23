@@ -49,7 +49,8 @@ $ yarn deploy
 💡
 _use option  **---region <aws-region>** to change region (default: **us-east-1**)_
 
-💡_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
+💡
+_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
 
 ## Testing the API
 
