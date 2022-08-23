@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "sls": "sls",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "start": "sls offline start",
     "build": "tsc",
     "dynamodb:install": "sls dynamodb install",
