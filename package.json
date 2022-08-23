@@ -5,7 +5,7 @@
   "scripts": {
     "sls": "sls",
     "start": "sls offline start",
-    "build": "tsc .",
+    "build": "tsc",
     "deploy": "sls deploy",
     "remove": "sls remove"
   },
