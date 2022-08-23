@@ -1,0 +1,17 @@
+functions:
+  addNote:
+    handler: src/functions/note/add-note.handler
+    name: ${self:service}-addNote-${sls:stage}
+    description: add a note
+    events:
+      - httpApi:
+          method: post
+          path: /notes
+  listNotes:
+    handler: src/functions/note/list-notes.handler
+    name: ${self:service}-listNotes-${sls:stage}
+    description: list all notes
+    events:
+      - httpApi:
+          method: get
+          path: /notes
