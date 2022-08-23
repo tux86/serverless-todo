@@ -1,0 +1,3 @@
+# Serverless Todo API
+
+## Architecture
