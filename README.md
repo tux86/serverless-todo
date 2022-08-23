@@ -67,6 +67,9 @@ _use option  **---region <aws-region>** to change region (default: **us-east-1**
     "content": "serverless rocks!"
 }
 ```
+
+#### Postman collection
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/ff906ff9c7730628a6ab?action=collection%2Fimport#?env%5BServerless%20Node.js%20TODO%20API%20Env%5D=W3sia2V5IjoiYXBpX2Jhc2VfdXJsIiwidmFsdWUiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsInNlc3Npb25JbmRleCI6MH1d)
     
 ## Remove the stack from AWS
 
