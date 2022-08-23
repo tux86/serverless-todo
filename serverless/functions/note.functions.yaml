@@ -15,3 +15,11 @@ functions:
       - httpApi:
           method: get
           path: /notes
+  getNote:
+    handler: src/functions/note/get-note.handler
+    name: ${self:service}-getNote-${sls:stage}
+    description: get a note
+    events:
+      - httpApi:
+          method: get
+          path: /notes/{noteId}

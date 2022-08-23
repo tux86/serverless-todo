@@ -1,5 +1,7 @@
 import {
   DynamoDBClient,
+  GetItemCommand,
+  GetItemCommandInput,
   PutItemCommand,
   PutItemCommandInput,
   ScanCommand,
@@ -42,5 +44,17 @@ export class NoteRepository {
       notes.push(unmarshall(item) as Note);
     }
     return notes;
+  }
+
+  // get a note by hash key
+  async getNote(noteId: string): Promise<Note | undefined> {
+    const params: GetItemCommandInput = {
+      TableName: tableName,
+      Key: marshall({
+        noteId,
+      }),
+    };
+    const { Item } = await this.ddbClient.send(new GetItemCommand(params));
+    return Item ? (unmarshall(Item) as Note) : undefined;
   }
 }
