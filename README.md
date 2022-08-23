@@ -75,5 +75,5 @@ _set option **---stage <dev|prod|...>** to deploy to a different environment (de
 ## Remove the stack from AWS
 
 ```shell
-$ yarn remove
+$ yarn sls:remove
 ```
