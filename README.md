@@ -30,6 +30,10 @@ $ git clone git@github.com:tux86/serverless-todo.git
 ```shell
 $ cd serverless-todo && yarn install
 ```
+- install dynamodb for local development
+```shell
+$ yarn dynamodb:install
+```
 - Start the offline mode and follow the instructions in the console.
 ```shell
 $ yarn start  # start serverless offline mode
