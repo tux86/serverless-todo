@@ -31,7 +31,6 @@ $ git clone git@github.com:tux86/serverless-todo.git
 $ cd serverless-todo && yarn install
 ```
 - Start the offline mode and follow the instructions in the console.
-
 ```shell
 $ yarn start  # start serverless offline mode
 ```
@@ -40,6 +39,9 @@ $ yarn start  # start serverless offline mode
 
 To deploy the stack on AWS, you need to execute the following command:
 
+_use option  **---region <aws-region>** to change region (default: **us-east-1**)_
+
+_set option **---stage <dev|prod|...>** to deploy to a different environment (default: **dev**)_
 ```shell
 $ yarn deploy
 ```
@@ -64,5 +66,5 @@ $ yarn deploy
 ## Remove the stack from AWS
 
 ```shell
-$ yarn remove --stage dev --region us-east-1
+$ yarn remove
 ```
